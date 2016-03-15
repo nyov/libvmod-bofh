@@ -1,0 +1,43 @@
+#
+# "nyov", 2016
+#
+# Released into the Public Domain.
+#
+# Originally written in 2008 for Varnish 1.x as a few lines of VCL inline-c,
+# using `VRT_synth_page()`. It was compiled into a VMOD as a learning experience.
+
+
+$Module bofh 3 BOFH-Excuses VMOD
+
+DESCRIPTION
+===========
+
+Varnish vmod that picks a random entry from a list of builtin BOFH excuses
+each time the function is called. For use with synthetic error pages.
+
+BOFH 101: Intended to confuse users, make them feel responsible, or blame
+anything under the sun but us, when backend services go AWOL. This should
+dissuade those pesky users from storming NOC or customer support with their
+silly and righteous demands about uptime and availability.
+
+Beware: The use of this strategy in company production environments may put
+ones' reputation as a reliable Sysadmin at risk. As such, after deployment
+one should preemptively prepare to upgrade ones' BOFH arsenal against inside
+threats of forced unemployment.
+
+The list of excuses is hardcoded for fire-and-forget deployments, so no time
+is wasted on unimportant details like configuration setups. Who has time to
+waste on such irrelevant things anyway.
+
+(Would you be looking for a Sysadmin, per chance?)
+
+
+$Init init_function
+$Function STRING excuse()
+
+Function that returns a random excuse.
+
+$Function VOID fix_excuse(INT excuse_index)
+
+The cheat mode. Calling this procedure with a list-index number will fix the
+return value for the next call of `excuse()` to this specific excuse number.

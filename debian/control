@@ -1,0 +1,25 @@
+Source: libvmod-bofh
+Section: web
+Priority: extra
+Maintainer: "nyov" <nyov@nexnode.net>
+Build-Depends: debhelper (>= 7),
+ build-essential,
+ pkg-config,
+ python-docutils,
+ varnish (>= 4.0.2),
+ libvarnishapi-dev (>= 4.0.2)
+Standards-Version: 3.8.4
+Homepage: https://github.com/nyov/libvmod-bofh
+Vcs-Git: https://github.com/nyov/libvmod-bofh.git
+
+Package: libvmod-bofh
+Architecture: any
+Depends: varnish (>= 4.0.2), ${shlibs:Depends}, ${misc:Depends}, ${Varnish:ABI}
+Description: BOFH-Excuses vmod for Varnish
+ Varnish vmod that picks a random entry from a list of builtin BOFH excuses
+ each time the function is called. For use with synthetic error pages.
+ .
+ BOFH 101: Intended to confuse users, make them feel responsible, or blame
+ anything under the sun but us, when backend services go AWOL. This should
+ dissuade those pesky users from storming NOC or customer support with their
+ silly and righteous demands about uptime and availability.

@@ -1,0 +1,23 @@
+varnishtest "Test bofh vmod"
+
+server s1 {
+       rxreq
+       txresp
+} -start
+
+varnish v1 -vcl+backend {
+	import bofh from "${vmod_topbuild}/src/.libs/libvmod_bofh.so";
+
+	sub vcl_deliver {
+		bofh.fix_excuse(1);
+		set resp.http.bofh = bofh.excuse();
+	}
+} -start
+
+client c1 {
+	txreq -url "/"
+	rxresp
+	expect resp.http.bofh == "Runaway solar flares"
+}
+
+client c1 -run
